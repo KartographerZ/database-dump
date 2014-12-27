@@ -7,6 +7,38 @@ DROP DATABASE IF EXISTS `kartographerz`;
 CREATE DATABASE `kartographerz` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `kartographerz`;
 
+
+DROP TABLE IF EXISTS `type_element`;
+CREATE TABLE `type_element` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `type_right`;
+CREATE TABLE `type_right` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `type_user`;
+CREATE TABLE `type_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `type_visibility`;
+CREATE TABLE `type_visibility` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `cartography`;
 CREATE TABLE `cartography` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -14,7 +46,7 @@ CREATE TABLE `cartography` (
   `date` date NOT NULL,
   `type_visibility_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `typeVisibiliteId` (`type_visibility_id`),
+  KEY `type_visibility_id` (`type_visibility_id`),
   CONSTRAINT `cartography_ibfk_1` FOREIGN KEY (`type_visibility_id`) REFERENCES `type_visibility` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -49,55 +81,6 @@ CREATE TABLE `link` (
   CONSTRAINT `link_ibfk_1` FOREIGN KEY (`element_1_id`) REFERENCES `element` (`id`),
   CONSTRAINT `link_ibfk_2` FOREIGN KEY (`element_2_id`) REFERENCES `element` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `right`;
-CREATE TABLE `right` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type_right_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `cartography_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type_right_id` (`type_right_id`),
-  KEY `cartography_id` (`cartography_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `right_ibfk_4` FOREIGN KEY (`type_right_id`) REFERENCES `type_right` (`id`),
-  CONSTRAINT `right_ibfk_5` FOREIGN KEY (`cartography_id`) REFERENCES `cartography` (`id`),
-  CONSTRAINT `right_ibfk_6` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `type_element`;
-CREATE TABLE `type_element` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `type_right`;
-CREATE TABLE `type_right` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `type_user`;
-CREATE TABLE `type_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `type_visibility`;
-CREATE TABLE `type_visibility` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -140,5 +123,20 @@ CREATE TABLE `version_element` (
   CONSTRAINT `version_element_ibfk_2` FOREIGN KEY (`element_id`) REFERENCES `element` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `right`;
+CREATE TABLE `right` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_right_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `cartography_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_right_id` (`type_right_id`),
+  KEY `cartography_id` (`cartography_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `right_ibfk_4` FOREIGN KEY (`type_right_id`) REFERENCES `type_right` (`id`),
+  CONSTRAINT `right_ibfk_5` FOREIGN KEY (`cartography_id`) REFERENCES `cartography` (`id`),
+  CONSTRAINT `right_ibfk_6` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 2014-12-27 14:03:19
+
+-- 2014-12-27 21:23:49
